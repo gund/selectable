@@ -1,0 +1,17 @@
+{
+  "name": "selectable",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Selection library for any javascript environment and beyond",
+  "keywords": [
+    "selectable",
+    "select",
+    "javascript",
+    "selection"
+  ],
+  "author": "Alex Malkevich <malkevich.alex@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
