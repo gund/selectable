@@ -11,11 +11,12 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
+    // "plugin:@typescript-eslint/recommended",
     "prettier",
     "prettier/@typescript-eslint"
   ],
   "rules": {
+    "no-unused-vars": "off",
     "no-undef": "off",
     "deprecation/deprecation": "warn",
     "@typescript-eslint/explicit-member-accessibility": "off",
