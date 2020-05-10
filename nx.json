@@ -14,15 +14,13 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e",
-          "compodoc"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e", "compodoc"]
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "core": {
+      "tags": ["platform:none"]
+    }
+  }
 }

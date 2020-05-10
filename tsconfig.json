@@ -11,11 +11,13 @@
     "target": "es2015",
     "module": "esnext",
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@selectable/core": ["libs/core/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
