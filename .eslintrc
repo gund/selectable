@@ -32,6 +32,10 @@
           {
             "sourceTag": "platform:none",
             "onlyDependOnLibsWithTags": ["platform:none"]
+          },
+          {
+            "sourceTag": "platform:browser",
+            "onlyDependOnLibsWithTags": ["platform:none", "platform:browser"]
           }
         ]
       }

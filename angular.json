@@ -38,6 +38,44 @@
           }
         }
       }
+    },
+    "browser": {
+      "root": "libs/browser",
+      "sourceRoot": "libs/browser/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/browser/.eslintrc",
+            "tsConfig": [
+              "libs/browser/tsconfig.lib.json",
+              "libs/browser/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/browser/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/browser/jest.config.js",
+            "tsConfig": "libs/browser/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/browser",
+            "tsConfig": "libs/browser/tsconfig.lib.json",
+            "packageJson": "libs/browser/package.json",
+            "main": "libs/browser/src/index.ts",
+            "assets": ["libs/browser/*.md"]
+          }
+        }
+      }
     }
   },
   "cli": {

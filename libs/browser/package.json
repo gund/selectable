@@ -1,0 +1,7 @@
+{
+  "name": "@selectable/browser",
+  "version": "0.0.1",
+  "dependencies": {
+    "@selectable/core": "^0.0.1"
+  }
+}

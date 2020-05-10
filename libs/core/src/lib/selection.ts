@@ -5,8 +5,8 @@ import { SelectionItemsProvider } from './items-provider';
 import { SelectionRenderer } from './renderer';
 import { SelectionStrategy } from './strategy';
 import { SelectionStrategyDefault } from './strategy-default';
-import { Point, SelectionCleanupCallback, SelectionItem, Rect } from './types';
-import { rect } from './util';
+import { Point, Rect, SelectionCleanupCallback, SelectionItem } from './types';
+import { emptyRect } from './util';
 
 export interface SelectionConfig<I> {
   itemsProvider: SelectionItemsProvider<I>;
@@ -27,8 +27,8 @@ export class Selection<I> {
   private readonly disposables: SelectionCleanupCallback[] = [];
 
   private isSelecting = false;
-  private rawSelection: Rect = rect();
-  private selection: Rect = rect();
+  private rawSelection: Rect = emptyRect();
+  private selection: Rect = emptyRect();
   private items: SelectionItem<I>[] = [];
   private itemRects: Rect[] = [];
   private selectedItems: SelectionItem<I>[] = [];
@@ -48,6 +48,7 @@ export class Selection<I> {
   destroy() {
     this.resetItems();
     this.strategy.destroy();
+    this.renderer.destroy();
     this.disposables.forEach((dispose) => dispose());
   }
 
@@ -148,6 +149,7 @@ export class Selection<I> {
   }
 
   private render() {
+    this.renderer.setIsSelecting(this.isSelecting);
     this.renderer.render(this.selection);
   }
 

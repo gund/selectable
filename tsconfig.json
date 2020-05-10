@@ -17,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@selectable/core": ["libs/core/src/index.ts"]
+      "@selectable/core": ["libs/core/src/index.ts"],
+      "@selectable/browser": ["libs/browser/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

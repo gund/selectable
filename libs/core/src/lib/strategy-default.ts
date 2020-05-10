@@ -1,9 +1,9 @@
 import { SelectionStrategy } from './strategy';
 import { Rect } from './types';
-import { rect } from './util';
+import { emptyRect } from './util';
 
 export class SelectionStrategyDefault<I> implements SelectionStrategy<I> {
-  private selection: Rect = rect();
+  private selection: Rect = emptyRect();
 
   setSelection(selection: Rect): void {
     this.selection = selection;

@@ -6,3 +6,4 @@ export * from './lib/strategy';
 export * from './lib/renderer';
 export * from './lib/events';
 export * from './lib/selection';
+export * from './lib/util';
