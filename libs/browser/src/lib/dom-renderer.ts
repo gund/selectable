@@ -23,6 +23,8 @@ export class DomSelectableRenderer implements SelectableRenderer {
 
   protected isSelecting = false;
 
+  private renderingId?: number;
+
   constructor(protected options: DomSelectableRendererOptions) {}
 
   setIsSelecting(isSelecting: boolean): void {
@@ -37,7 +39,7 @@ export class DomSelectableRenderer implements SelectableRenderer {
   }
 
   render(selection: Rect): void {
-    this.updateStrategy.update(this.selection, selection);
+    this.scheduleRendering(selection);
   }
 
   destroy(): void {
@@ -45,6 +47,18 @@ export class DomSelectableRenderer implements SelectableRenderer {
     this.selection = null!;
     this.container = null!;
     this.options = null!;
+  }
+
+  protected scheduleRendering(selection: Rect) {
+    if (this.renderingId) {
+      cancelAnimationFrame(this.renderingId);
+      this.renderingId = undefined;
+    }
+
+    this.renderingId = requestAnimationFrame(() => {
+      this.renderingId = undefined;
+      this.updateStrategy.update(this.selection, selection);
+    });
   }
 
   protected createSelection() {
