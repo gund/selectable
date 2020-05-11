@@ -11,4 +11,6 @@ export * from './lib/dom-items-provider-strategy-class';
 export * from './lib/dom-items-provider-strategy-selector';
 export * from './lib/dom-strategy';
 export * from './lib/dom-visitor-resize';
+export * from './lib/dom-strategy-plugin';
+export * from './lib/dom-strategy-plugin-addition';
 export * from './lib/util';

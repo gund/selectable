@@ -5,8 +5,24 @@ import { emptyRect } from './util';
 export class SelectableStrategyDefault<I> implements SelectableStrategy<I> {
   private selection: Rect = emptyRect();
 
+  selectionStarted(): void {
+    // Nothing to do here
+  }
+
+  selectionEnded(): void {
+    // Nothing to do here
+  }
+
   setSelection(selection: Rect): void {
     this.selection = selection;
+  }
+
+  setSelecting(items: I[]): void {
+    // Nothing to do here
+  }
+
+  setSelected(items: I[]): void {
+    // Nothing to do here
   }
 
   isSelected(rect: Rect): boolean {

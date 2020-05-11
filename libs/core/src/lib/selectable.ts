@@ -93,6 +93,8 @@ export class Selectable<I> {
     this.updateSelection();
     this.updateItems();
     this.render();
+
+    this.strategy.selectionStarted();
   }
 
   private onMove(point: Point) {
@@ -114,6 +116,8 @@ export class Selectable<I> {
     this.updateSelection();
     this.updateItems();
     this.render();
+
+    this.strategy.selectionEnded();
   }
 
   private onItems(items: SelectableItem<I>[]) {
@@ -162,6 +166,7 @@ export class Selectable<I> {
 
       this.lastSelectedItems = this.selectedItems;
     } else {
+      this.strategy.setSelected(this.selectedItems);
       this.events.emit('selected', this.selectedItems);
     }
   }
