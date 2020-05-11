@@ -4,12 +4,13 @@ import { DomSelectableEventManagerMouse } from './dom-event-manager-mouse';
 import { DomSelectableItemMeasurer } from './dom-item-measurer';
 import { DomSelectableItemsProvider } from './dom-items-provider';
 import { DomSelectableRenderer } from './dom-renderer';
+import { DomSelectableUpdateStrategy } from './dom-renderer-strategy';
 import { DomSelectableStrategy } from './dom-strategy';
 import { DomSelectableStrategyPlugin } from './dom-strategy-plugin';
 import {
-  DomSelectableStrategyPluginAdditionOptions,
   DomSelectableStrategyPluginAddition,
   DomSelectableStrategyPluginAdditionModifier,
+  DomSelectableStrategyPluginAdditionOptions,
 } from './dom-strategy-plugin-addition';
 import { DomSelectableVisitorResize } from './dom-visitor-resize';
 
@@ -18,12 +19,14 @@ export interface DomSelectableConfig
   container: HTMLElement;
   updateOnResize?: boolean;
   addOnModifier?: DomSelectableStrategyPluginAdditionOptions['modifierKey'];
+  updateStrategy?: DomSelectableUpdateStrategy;
   plugins?: DomSelectableStrategyPlugin[];
 }
 
 export class DomSelectable extends Selectable<HTMLElement> {
   constructor({
     container,
+    updateStrategy,
     addOnModifier = DomSelectableStrategyPluginAdditionModifier,
     updateOnResize = true,
     itemsProvider = new DomSelectableItemsProvider({
@@ -36,6 +39,7 @@ export class DomSelectable extends Selectable<HTMLElement> {
     }),
     renderer = new DomSelectableRenderer({
       container: container,
+      updateStrategy,
     }),
     strategy,
     visitors = [],

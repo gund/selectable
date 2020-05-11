@@ -1,7 +1,7 @@
 import { Rect, SelectableRenderer } from '@selectable/core';
 
 import { DomSelectableUpdateStrategy } from './dom-renderer-strategy';
-import { DomSelectableUpdateStrategyReflow } from './dom-renderer-strategy-reflow';
+import { DomSelectableUpdateStrategyTransform } from './dom-renderer-strategy-transform';
 
 export interface DomSelectableRendererOptions {
   container: HTMLElement;
@@ -14,7 +14,7 @@ export interface DomSelectableRendererOptions {
 export class DomSelectableRenderer implements SelectableRenderer {
   protected container = this.options.container;
   protected updateStrategy =
-    this.options.updateStrategy || new DomSelectableUpdateStrategyReflow();
+    this.options.updateStrategy || new DomSelectableUpdateStrategyTransform();
   protected selectionTag = this.options.selectionTag || 'div';
   protected selectionClass = this.options.selectionClass || 'selection';
   protected selectingClass = this.options.selectingClass || 'selecting';
