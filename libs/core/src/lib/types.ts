@@ -9,6 +9,6 @@ export interface Rect {
 }
 
 // Item is opaque for the Selection
-export type SelectionItem<T = unknown> = T;
+export type SelectableItem<T = unknown> = T;
 
-export type SelectionCleanupCallback = () => void;
+export type SelectableCleanupCallback = () => void;

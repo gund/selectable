@@ -1,7 +1,7 @@
-import { SelectionCleanupCallback, SelectionItem } from './types';
+import { SelectableCleanupCallback, SelectableItem } from './types';
 
-export type SelectionOnItemsCallback<T> = (items: SelectionItem<T>[]) => void;
+export type SelectableOnItemsCallback<T> = (items: SelectableItem<T>[]) => void;
 
-export interface SelectionItemsProvider<T> {
-  registerOnItems(cb: SelectionOnItemsCallback<T>): SelectionCleanupCallback;
+export interface SelectableItemsProvider<T> {
+  registerOnItems(cb: SelectableOnItemsCallback<T>): SelectableCleanupCallback;
 }

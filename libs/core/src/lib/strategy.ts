@@ -1,8 +1,8 @@
-import { Rect, SelectionItem } from './types';
+import { Rect, SelectableItem } from './types';
 
-export interface SelectionStrategy<I> {
+export interface SelectableStrategy<I> {
   setSelection(selection: Rect): void;
-  isSelected(rect: Rect, item: SelectionItem<I>): boolean;
+  isSelected(rect: Rect, item: SelectableItem<I>): boolean;
   reset(): void;
   destroy(): void;
 }

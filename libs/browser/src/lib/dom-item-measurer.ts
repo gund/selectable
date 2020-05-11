@@ -1,7 +1,7 @@
-import { point, Rect, rect, SelectionItemMeasurer } from '@selectable/core';
+import { point, Rect, rect, SelectableItemMeasurer } from '@selectable/core';
 
-export class DomSelectionItemMeasurer
-  implements SelectionItemMeasurer<HTMLElement> {
+export class DomSelectableItemMeasurer
+  implements SelectableItemMeasurer<HTMLElement> {
   measure(item: HTMLElement): Rect {
     const itemRect = item.getBoundingClientRect();
 

@@ -1,42 +1,61 @@
-import { SelectionEventManager } from './event-manager';
+import { SelectableEventManager } from './event-manager';
 import { SelectionEvents } from './events';
-import { SelectionItemMeasurer } from './item-measurer';
-import { SelectionItemsProvider } from './items-provider';
-import { SelectionRenderer } from './renderer';
-import { SelectionStrategy } from './strategy';
-import { SelectionStrategyDefault } from './strategy-default';
-import { Point, Rect, SelectionCleanupCallback, SelectionItem } from './types';
+import { SelectableItemMeasurer } from './item-measurer';
+import { SelectableItemsProvider } from './items-provider';
+import { SelectableRenderer } from './renderer';
+import { SelectableStrategy } from './strategy';
+import { SelectableStrategyDefault } from './strategy-default';
+import {
+  Point,
+  Rect,
+  SelectableCleanupCallback,
+  SelectableItem,
+} from './types';
 import { emptyRect } from './util';
+import { SelectableVisitor } from './visitor';
 
-export interface SelectionConfig<I> {
-  itemsProvider: SelectionItemsProvider<I>;
-  itemMeasurer: SelectionItemMeasurer<I>;
-  eventManager: SelectionEventManager;
-  renderer: SelectionRenderer;
-  strategy?: SelectionStrategy<I>;
+export interface SelectableConfig<I> {
+  itemsProvider: SelectableItemsProvider<I>;
+  itemMeasurer: SelectableItemMeasurer<I>;
+  eventManager: SelectableEventManager;
+  renderer: SelectableRenderer;
+  strategy?: SelectableStrategy<I>;
+  visitors?: SelectableVisitor<I>[];
 }
 
-export class Selection<I> {
+export class Selectable<I> {
   private readonly itemsProvider = this.config.itemsProvider;
   private readonly itemMeasurer = this.config.itemMeasurer;
   private readonly eventManager = this.config.eventManager;
   private readonly renderer = this.config.renderer;
   private readonly strategy =
-    this.config.strategy || new SelectionStrategyDefault<I>();
+    this.config.strategy || new SelectableStrategyDefault<I>();
   private readonly events = new SelectionEvents<I>();
-  private readonly disposables: SelectionCleanupCallback[] = [];
+  private visitors = this.config.visitors || [];
+  private disposables: SelectableCleanupCallback[] = [];
 
   private isSelecting = false;
   private rawSelection: Rect = emptyRect();
   private selection: Rect = emptyRect();
-  private items: SelectionItem<I>[] = [];
+  private items: SelectableItem<I>[] = [];
   private itemRects: Rect[] = [];
-  private selectedItems: SelectionItem<I>[] = [];
-  private lastSelectedItems: SelectionItem<I>[] = [];
+  private selectedItems: SelectableItem<I>[] = [];
+  private lastSelectedItems: SelectableItem<I>[] = [];
 
-  constructor(private config: SelectionConfig<I>) {
+  constructor(private config: SelectableConfig<I>) {
     this.initEvents();
     this.initItems();
+
+    this.visitors.forEach((visitor) => visitor.apply(this));
+
+    this.disposables.push(() => {
+      this.resetItems();
+      this.strategy.destroy();
+      this.renderer.destroy();
+      this.events.destroy();
+      this.visitors.forEach((visitor) => visitor.destroy());
+      this.visitors = [];
+    });
   }
 
   on = this.events.on.bind(this.events);
@@ -46,10 +65,8 @@ export class Selection<I> {
   }
 
   destroy() {
-    this.resetItems();
-    this.strategy.destroy();
-    this.renderer.destroy();
     this.disposables.forEach((dispose) => dispose());
+    this.disposables = [];
   }
 
   private initEvents() {
@@ -71,6 +88,7 @@ export class Selection<I> {
 
     this.rawSelection.start.x = this.rawSelection.end.x = point.x;
     this.rawSelection.start.y = this.rawSelection.end.y = point.y;
+    this.lastSelectedItems = [];
 
     this.updateSelection();
     this.updateItems();
@@ -98,7 +116,7 @@ export class Selection<I> {
     this.render();
   }
 
-  private onItems(items: SelectionItem<I>[]) {
+  private onItems(items: SelectableItem<I>[]) {
     this.resetItems();
     this.items = items;
 

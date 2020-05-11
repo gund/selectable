@@ -1,5 +1,5 @@
-import { SelectionItem, Rect } from './types';
+import { SelectableItem, Rect } from './types';
 
-export interface SelectionItemMeasurer<T> {
-  measure(item: SelectionItem<T>): Rect;
+export interface SelectableItemMeasurer<T> {
+  measure(item: SelectableItem<T>): Rect;
 }

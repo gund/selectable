@@ -1,3 +1,4 @@
+export * from './lib/dom-selectable';
 export * from './lib/dom-renderer';
 export * from './lib/dom-renderer-strategy';
 export * from './lib/dom-renderer-strategy-reflow';
@@ -8,4 +9,6 @@ export * from './lib/dom-items-provider';
 export * from './lib/dom-items-provider-strategy';
 export * from './lib/dom-items-provider-strategy-class';
 export * from './lib/dom-items-provider-strategy-selector';
+export * from './lib/dom-strategy';
+export * from './lib/dom-visitor-resize';
 export * from './lib/util';

@@ -1,31 +1,36 @@
 import {
-  SelectionCleanupCallback,
-  SelectionEventManager,
-  SelectionEventManagerCallback,
+  SelectableCleanupCallback,
+  SelectableEventManager,
+  SelectableEventManagerCallback,
 } from '@selectable/core';
 
-export interface DomSelectionEventManagerOptions {
+export interface DomSelectableEventManagerOptions {
   container: HTMLElement;
+  updateOnResize?: boolean;
 }
 
-export class DomSelectionEventManagerMouse implements SelectionEventManager {
+export class DomSelectableEventManagerMouse implements SelectableEventManager {
   protected container = this.options.container;
 
-  constructor(protected options: DomSelectionEventManagerOptions) {}
+  constructor(protected options: DomSelectableEventManagerOptions) {}
 
-  registerOnStart(cb: SelectionEventManagerCallback): SelectionCleanupCallback {
+  registerOnStart(
+    cb: SelectableEventManagerCallback
+  ): SelectableCleanupCallback {
     this.container.addEventListener('mousedown', cb, { capture: false });
 
     return () => this.container.removeEventListener('mousedown', cb);
   }
 
-  registerOnMove(cb: SelectionEventManagerCallback): SelectionCleanupCallback {
+  registerOnMove(
+    cb: SelectableEventManagerCallback
+  ): SelectableCleanupCallback {
     this.container.addEventListener('mousemove', cb, { capture: false });
 
     return () => this.container.removeEventListener('mousemove', cb);
   }
 
-  registerOnEnd(cb: SelectionEventManagerCallback): SelectionCleanupCallback {
+  registerOnEnd(cb: SelectableEventManagerCallback): SelectableCleanupCallback {
     this.container.addEventListener('mouseup', cb, { capture: false });
 
     return () => this.container.removeEventListener('mouseup', cb);

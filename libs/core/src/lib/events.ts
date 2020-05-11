@@ -1,8 +1,8 @@
-import { SelectionCleanupCallback, SelectionItem } from './types';
+import { SelectableCleanupCallback, SelectableItem } from './types';
 
 export interface SelectionEventMap<I> {
-  selected: SelectionItem<I>[];
-  selecting: SelectionItem<I>[];
+  selected: SelectableItem<I>[];
+  selecting: SelectableItem<I>[];
 }
 
 export type SelectionEventHandler<D> = (data: D) => void;
@@ -14,12 +14,12 @@ type SelectionListenersMap<I> = {
 };
 
 export class SelectionEvents<I> {
-  private readonly listenersMap: SelectionListenersMap<I> = Object.create(null);
+  private listenersMap: SelectionListenersMap<I> = Object.create(null);
 
   on<E extends keyof SelectionEventMap<I>>(
     name: E,
     cb: SelectionEventHandler<SelectionEventMap<I>[E]>
-  ): SelectionCleanupCallback {
+  ): SelectableCleanupCallback {
     const listeners = this.listenersMap[name] || (this.listenersMap[name] = []);
 
     listeners!.push(cb);
@@ -38,5 +38,9 @@ export class SelectionEvents<I> {
     }
 
     listeners.forEach((listener) => listener(data));
+  }
+
+  destroy() {
+    this.listenersMap = {};
   }
 }

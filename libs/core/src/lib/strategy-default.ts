@@ -1,8 +1,8 @@
-import { SelectionStrategy } from './strategy';
+import { SelectableStrategy } from './strategy';
 import { Rect } from './types';
 import { emptyRect } from './util';
 
-export class SelectionStrategyDefault<I> implements SelectionStrategy<I> {
+export class SelectableStrategyDefault<I> implements SelectableStrategy<I> {
   private selection: Rect = emptyRect();
 
   setSelection(selection: Rect): void {

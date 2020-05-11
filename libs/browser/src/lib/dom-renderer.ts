@@ -1,21 +1,20 @@
-import { Rect, SelectionRenderer } from '@selectable/core';
+import { Rect, SelectableRenderer } from '@selectable/core';
 
-import { DomSelectionUpdateStrategy } from './dom-renderer-strategy';
-import { DomSelectionUpdateStrategyReflow } from './dom-renderer-strategy-reflow';
-import { toPx } from './util';
+import { DomSelectableUpdateStrategy } from './dom-renderer-strategy';
+import { DomSelectableUpdateStrategyReflow } from './dom-renderer-strategy-reflow';
 
-export interface DomSelectionRendererOptions {
+export interface DomSelectableRendererOptions {
   container: HTMLElement;
-  updateStrategy?: DomSelectionUpdateStrategy;
+  updateStrategy?: DomSelectableUpdateStrategy;
   selectionTag?: string;
   selectionClass?: string;
   selectingClass?: string;
 }
 
-export class DomSelectionRenderer implements SelectionRenderer {
+export class DomSelectableRenderer implements SelectableRenderer {
   protected container = this.options.container;
   protected updateStrategy =
-    this.options.updateStrategy || new DomSelectionUpdateStrategyReflow();
+    this.options.updateStrategy || new DomSelectableUpdateStrategyReflow();
   protected selectionTag = this.options.selectionTag || 'div';
   protected selectionClass = this.options.selectionClass || 'selection';
   protected selectingClass = this.options.selectingClass || 'selecting';
@@ -24,7 +23,7 @@ export class DomSelectionRenderer implements SelectionRenderer {
 
   protected isSelecting = false;
 
-  constructor(protected options: DomSelectionRendererOptions) {}
+  constructor(protected options: DomSelectableRendererOptions) {}
 
   setIsSelecting(isSelecting: boolean): void {
     if (this.isSelecting === isSelecting) {
@@ -52,7 +51,10 @@ export class DomSelectionRenderer implements SelectionRenderer {
     const selection = document.createElement(this.selectionTag);
 
     this.initSelection(selection);
+    this.updateStrategy.initSelection(selection);
+
     this.initContainer(this.container);
+    this.updateStrategy.initContainer(this.container);
 
     this.container.appendChild(selection);
 
@@ -63,12 +65,14 @@ export class DomSelectionRenderer implements SelectionRenderer {
     selection.classList.add(this.selectionClass);
 
     selection.style.position = 'absolute';
-    selection.style.opacity = '0';
     selection.style.pointerEvents = 'none';
+    selection.style.opacity = '0';
+    selection.style.willChange = 'opacity';
   }
 
   protected initContainer(container: HTMLElement): void {
     container.style.position = 'relative';
+    container.style.userSelect = 'none';
   }
 
   protected updateSelection(selection: HTMLElement): void {
