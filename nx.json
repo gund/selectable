@@ -24,6 +24,13 @@
     },
     "browser": {
       "tags": ["platform:browser"]
+    },
+    "browser-example": {
+      "tags": ["platform:browser"]
+    },
+    "browser-example-e2e": {
+      "tags": [],
+      "implicitDependencies": ["browser-example"]
     }
   }
 }

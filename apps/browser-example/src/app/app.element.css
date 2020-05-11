@@ -1,0 +1,42 @@
+.items-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: baseline;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.items-container .item {
+  margin: 5px;
+  outline: 1px solid lightblue;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  color: grey;
+  font-family: monospace;
+  background-color: transparent;
+  transition: 0.2s background-color ease-in-out;
+  will-change: background-color;
+}
+
+.items-container .item.selected {
+  background-color: lightcyan;
+}
+
+.items-container.selecting .item.selected {
+  background-color: lightgray;
+}
+
+.selection {
+  background: rgba(169, 169, 169, 0);
+}
+
+.selecting .selection {
+  background: rgba(169, 169, 169, 0.5);
+}
