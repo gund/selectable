@@ -1,7 +1,6 @@
 import './app.element.css';
 
 import { DomSelectable } from '@selectable/browser';
-import { Selectable } from '@selectable/core';
 
 export class AppElement extends HTMLElement {
   static observedAttributes = ['items'];
@@ -9,7 +8,7 @@ export class AppElement extends HTMLElement {
   items = 100;
 
   private initialRendered = false;
-  private selectable?: Selectable<HTMLElement>;
+  private selectable?: DomSelectable;
 
   connectedCallback() {
     this.render(true);
