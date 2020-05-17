@@ -28,13 +28,10 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/angular:package",
           "options": {
-            "outputPath": "dist/libs/core",
             "tsConfig": "libs/core/tsconfig.lib.json",
-            "packageJson": "libs/core/package.json",
-            "main": "libs/core/src/index.ts",
-            "assets": ["libs/core/*.md"]
+            "project": "libs/core/ng-package.json"
           }
         }
       }
@@ -66,13 +63,10 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/angular:package",
           "options": {
-            "outputPath": "dist/libs/browser",
             "tsConfig": "libs/browser/tsconfig.lib.json",
-            "packageJson": "libs/browser/package.json",
-            "main": "libs/browser/src/index.ts",
-            "assets": ["libs/browser/*.md"]
+            "project": "libs/browser/ng-package.json"
           }
         }
       }
