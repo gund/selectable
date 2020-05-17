@@ -35,10 +35,12 @@ export class DomSelectableStrategy implements SelectableStrategy<HTMLElement> {
   }
 
   setSelecting(items: HTMLElement[]): void {
+    this.baseStrategy.setSelecting(items);
     this.plugins.forEach((plugin) => plugin.setSelecting(items));
   }
 
   setSelected(items: HTMLElement[]): void {
+    this.baseStrategy.setSelected(items);
     this.plugins.forEach((plugin) => plugin.setSelected(items));
   }
 
