@@ -1,6 +1,9 @@
 {
   "name": "@selectable/browser",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@selectable/core": "^0.0.1"
   }
