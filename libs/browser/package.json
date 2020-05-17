@@ -1,10 +1,10 @@
 {
   "name": "@selectable/browser",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@selectable/core": "^0.0.1"
+    "@selectable/core": "^0.1.0"
   }
 }
