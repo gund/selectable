@@ -1,4 +1,9 @@
-import { Selectable, SelectableConfig } from '@selectable/core';
+import {
+  Selectable,
+  SelectableConfig,
+  SelectableStrategyDefault,
+  SelectableStrategyPluggable,
+} from '@selectable/core';
 
 import { DomSelectableEventManagerMouse } from './dom-event-manager-mouse';
 import { DomSelectableItemMeasurer } from './dom-item-measurer';
@@ -35,7 +40,6 @@ export class DomSelectable extends Selectable<HTMLElement> {
     itemMeasurer = new DomSelectableItemMeasurer(),
     eventManager = new DomSelectableEventManagerMouse({
       container: container,
-      updateOnResize,
     }),
     renderer = new DomSelectableRenderer({
       container: container,
@@ -56,9 +60,12 @@ export class DomSelectable extends Selectable<HTMLElement> {
       );
     }
 
-    if (!strategy) {
-      strategy = new DomSelectableStrategy({ plugins });
+    if (plugins.length) {
+      strategy = strategy ?? new SelectableStrategyDefault();
+      strategy = new SelectableStrategyPluggable({ strategy, plugins });
     }
+
+    strategy = new DomSelectableStrategy({ strategy });
 
     super({
       ...restConfig,
