@@ -3,8 +3,8 @@ import { SelectionEvents } from './events';
 import { SelectableItemMeasurer } from './item-measurer';
 import { SelectableItemsProvider } from './items-provider';
 import { SelectableRenderer } from './renderer';
+import { SelectableStrategyDefault } from './strategies/default';
 import { SelectableStrategy } from './strategy';
-import { SelectableStrategyDefault } from './strategy-default';
 import {
   Point,
   Rect,

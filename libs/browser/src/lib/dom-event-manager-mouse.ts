@@ -6,7 +6,6 @@ import {
 
 export interface DomSelectableEventManagerOptions {
   container: HTMLElement;
-  updateOnResize?: boolean;
 }
 
 export class DomSelectableEventManagerMouse implements SelectableEventManager {

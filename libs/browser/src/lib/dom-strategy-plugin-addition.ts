@@ -1,4 +1,8 @@
-import { Rect } from '@selectable/core';
+import {
+  SelectableStrategyPluginAddition,
+  SelectableStrategyPluginAdditionOptions,
+  SelectableStrategyPluginAdditionTrigger,
+} from '@selectable/core';
 
 import { DomSelectableStrategyPlugin } from './dom-strategy-plugin';
 
@@ -7,47 +11,48 @@ export interface DomSelectableStrategyPluginAdditionOptions {
    * Modifier keys as specified is HTML Spec
    * @see https://w3c.github.io/uievents-key/#keys-modifier
    */
-  modifierKey?: 'Control' | 'Shift' | 'Meta' | 'Alt' | string;
+  modifierKey?: DomSelectableStrategyPluginAdditionModifierKey;
+  plugin?: Omit<SelectableStrategyPluginAdditionOptions, 'trigger'>;
 }
 
-export const DomSelectableStrategyPluginAdditionModifier = 'Control';
+export type DomSelectableStrategyPluginAdditionModifierKey =
+  | 'Control'
+  | 'Shift'
+  | 'Meta'
+  | 'Alt';
+
+export const DomSelectableStrategyPluginAdditionModifier: DomSelectableStrategyPluginAdditionModifierKey =
+  'Control';
 
 export class DomSelectableStrategyPluginAddition
-  implements DomSelectableStrategyPlugin {
-  private readonly modifierKey =
-    this.options.modifierKey || DomSelectableStrategyPluginAdditionModifier;
+  extends SelectableStrategyPluginAddition<HTMLElement>
+  implements
+    DomSelectableStrategyPlugin,
+    SelectableStrategyPluginAdditionTrigger {
+  private readonly modifierKey: DomSelectableStrategyPluginAdditionModifierKey;
 
   private isModifierActive = false;
-  private lastSelectedItems = new Map<HTMLElement, boolean>();
 
-  constructor(private options: DomSelectableStrategyPluginAdditionOptions) {
+  constructor(options: DomSelectableStrategyPluginAdditionOptions) {
+    super(options.plugin || {});
+
+    this.setTrigger(this);
+
+    this.modifierKey =
+      options.modifierKey || DomSelectableStrategyPluginAdditionModifier;
+
     window.addEventListener('keydown', this.checkModifierKey);
     window.addEventListener('keyup', this.checkModifierKey);
   }
 
-  isSelected(currently: boolean, rect: Rect, item: HTMLElement): boolean {
-    if (!this.isModifierActive) {
-      this.lastSelectedItems.set(item, currently);
-      return currently;
-    }
-
-    const previously = this.lastSelectedItems.get(item) ?? false;
-    const selected = !!(+currently ^ +previously);
-
-    return selected;
-  }
-
-  setSelecting(items: HTMLElement[]): void {}
-
-  setSelected(items: HTMLElement[]): void {
-    this.lastSelectedItems.clear();
-    items.forEach((item) => this.lastSelectedItems.set(item, true));
-  }
-
   destroy(): void {
-    this.lastSelectedItems.clear();
+    super.destroy();
     window.removeEventListener('keydown', this.checkModifierKey);
     window.removeEventListener('keyup', this.checkModifierKey);
+  }
+
+  isActive(): boolean {
+    return this.isModifierActive;
   }
 
   private checkModifierKey = (event: KeyboardEvent) => {

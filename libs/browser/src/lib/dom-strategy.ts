@@ -4,12 +4,9 @@ import {
   SelectableStrategyDefault,
 } from '@selectable/core';
 
-import { DomSelectableStrategyPlugin } from './dom-strategy-plugin';
-
 export interface DomSelectableStrategyOptions {
   selectedClass?: string;
   strategy?: SelectableStrategy<any>;
-  plugins?: DomSelectableStrategyPlugin[];
 }
 
 export class DomSelectableStrategy implements SelectableStrategy<HTMLElement> {
@@ -17,8 +14,6 @@ export class DomSelectableStrategy implements SelectableStrategy<HTMLElement> {
 
   private baseStrategy =
     this.options.strategy || new SelectableStrategyDefault();
-
-  private plugins = this.options.plugins || [];
 
   constructor(private options: DomSelectableStrategyOptions = {}) {}
 
@@ -36,19 +31,14 @@ export class DomSelectableStrategy implements SelectableStrategy<HTMLElement> {
 
   setSelecting(items: HTMLElement[]): void {
     this.baseStrategy.setSelecting(items);
-    this.plugins.forEach((plugin) => plugin.setSelecting(items));
   }
 
   setSelected(items: HTMLElement[]): void {
     this.baseStrategy.setSelected(items);
-    this.plugins.forEach((plugin) => plugin.setSelected(items));
   }
 
   isSelected(rect: Rect, item: HTMLElement): boolean {
-    const isSelected = this.plugins.reduce(
-      (selected, plugin) => plugin.isSelected(selected, rect, item),
-      this.baseStrategy.isSelected(rect, item)
-    );
+    const isSelected = this.baseStrategy.isSelected(rect, item);
 
     if (isSelected) {
       item.classList.add(this.selectedClass);
@@ -65,10 +55,6 @@ export class DomSelectableStrategy implements SelectableStrategy<HTMLElement> {
 
   destroy(): void {
     this.options = null!;
-
-    this.plugins.forEach((plugin) => plugin.destroy());
-    this.plugins = [];
-
     this.baseStrategy.destroy();
     this.baseStrategy = null!;
   }
