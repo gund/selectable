@@ -1,6 +1,6 @@
-import { SelectableStrategy } from './strategy';
-import { Rect } from './types';
-import { emptyRect } from './util';
+import { SelectableStrategy } from '../strategy';
+import { Rect } from '../types';
+import { emptyRect } from '../util';
 
 export class SelectableStrategyDefault<I> implements SelectableStrategy<I> {
   private selection: Rect = emptyRect();
@@ -48,6 +48,6 @@ export class SelectableStrategyDefault<I> implements SelectableStrategy<I> {
   }
 
   destroy(): void {
-    // Nothing to destroy here
+    this.selection = undefined!;
   }
 }
