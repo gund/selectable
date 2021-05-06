@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/gund/selectable/compare/@selectable/core@0.1.0...@selectable/core@0.2.0) (2021-05-06)
+
+
+### Features
+
+* **core:** add addition strategy plugin ([6a45a32](https://github.com/gund/selectable/commit/6a45a32d926aabed8a8b6bfe3b87d3d8fb8b7569))
+* **core:** introduce pluggable strategy ([a3b4bdd](https://github.com/gund/selectable/commit/a3b4bdd05722f2c3e321524caadcde035b16969f))
+
+
+
+
+
 # 0.1.0 (2020-05-17)
 
 

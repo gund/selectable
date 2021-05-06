@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/gund/selectable/compare/@selectable/browser@0.1.0...@selectable/browser@0.1.1) (2021-05-06)
+
+
+### Bug Fixes
+
+* **browser:** use pluggable strategy ([71ff576](https://github.com/gund/selectable/commit/71ff576295525a253668a2e817c536b255347ae7))
+
+
+
+
+
 # 0.1.0 (2020-05-17)
 
 
